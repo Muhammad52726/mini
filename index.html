@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kino Qidirish</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #121212; color: white; padding: 15px; margin: 0; }
+        input { width: 100%; padding: 12px; font-size: 16px; border-radius: 8px; border: none; outline: none; box-sizing: border-box; margin-bottom: 15px; background: #1e1e1e; color: white; }
+        .movie-card { background: #1e1e1e; padding: 12px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
+        button { background: #2481cc; color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:active { background: #1d69a8; }
+    </style>
+</head>
+<body>
+
+    <input type="text" id="searchBox" placeholder="Kino nomini yozing..." onkeyup="filterMovies()">
+
+    <div id="movieList">
+        <div class="movie-card">
+            <span>Avatar 2</span>
+            <button onclick="selectMovie('movie_1')">Ko'rish</button>
+        </div>
+        <div class="movie-card">
+            <span>Spider-Man</span>
+            <button onclick="selectMovie('movie_2')">Ko'rish</button>
+        </div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function selectMovie(movieId) {
+            tg.sendData(movieId);
+        }
+
+        function filterMovies() {
+            let query = document.getElementById('searchBox').value.toLowerCase();
+            let cards = document.querySelectorAll('.movie-card');
+            cards.forEach(card => {
+                let title = card.querySelector('span').innerText.toLowerCase();
+                card.style.display = title.includes(query) ? "flex" : "none";
+            });
+        }
+    </script>
+</body>
+</html>
